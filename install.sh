@@ -7,8 +7,8 @@ skip="${1:-}"
 main() {
   confirm
 
-  install_brew
-  install_brew_packages
+#  install_brew
+#  install_brew_packages
 
   setup_git
   setup_ssh
@@ -16,7 +16,7 @@ main() {
   install_gpg
   install_ruby
   install_sshb0t
-  install_vimfiles
+  install_nvimfiles
   install_go_deps
 
   install_colorschemes
@@ -174,15 +174,23 @@ install_sshb0t() {
     --user rodolfo2488
 }
 
-install_vimfiles() {
+install_nvimfiles() {
   echo "Updating pip..."
   pip3 install --upgrade pip
 
   echo "Installing python-client for neovim..."
   pip3 install neovim
+  pip2 install neovim
 
   echo "Adding yamllint for neomake..."
+  pip2 install -q yamllint
   pip3 install -q yamllint
+
+  echo "Installing neovim in npm..."
+  npm install -g neovim
+
+  echo "Installing neovim in gem..."
+  gem install neovim
 
   if [[ -f ${HOME}/.config/vim ]]; then
     echo "removing ~/.config/vim dir && ~/.config/nvim"
@@ -195,6 +203,8 @@ install_vimfiles() {
 
   echo "Adding configuration to nvim..."
   mkdir -p "${HOME}/.config/nvim/user"
+  ln -sf "$(pwd)/before.vim" "${HOME}/.config/nvim/user/before.vim"
+  ln -sf "$(pwd)/plug.vim" "${HOME}/.config/nvim/user/plug.vim"
   ln -sf "$(pwd)/after.vim" "${HOME}/.config/nvim/user/after.vim"
 
   echo "Copy snippets..."
