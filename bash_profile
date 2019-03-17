@@ -22,7 +22,7 @@ main() {
     alias h\?="history | grep"
 
     alias ip="dig +short myip.opendns.com @resolver1.opendns.com"
-		alias localip="ipconfig getifaddr en0"
+    alias localip="ipconfig getifaddr en0"
     alias ips="ifconfig -a | grep -o 'inet6\? \(addr:\)\?\s\?\(\(\([0-9]\+\.\)\{3\}[0-9]\+\)\|[a-fA-F0-9:]\+\)' | awk '{ sub(/inet6? (addr:)? ?/, \"\"); print }'"
     alias ifactive="ifconfig | pcregrep -M -o '^[^\t:]+:([^\n]|\n\t)*status: active'"
 
@@ -31,16 +31,16 @@ main() {
     # Finally, clear download history from quarantine. https://mths.be/bum
     alias emptytrash="sudo rm -rfv /Volumes/*/.Trashes; sudo rm -rfv ~/.Trash; sudo rm -rfv /private/var/log/asl/*.asl; sqlite3 ~/Library/Preferences/com.apple.LaunchServices.QuarantineEventsV* 'delete from LSQuarantineEvent'"
 
-		# Intuitive map function
-		# For example, to list all directories that contain a certain file:
-		# find . -name .gitattributes | map dirname
-		alias map="xargs -n1"
+    # Intuitive map function
+    # For example, to list all directories that contain a certain file:
+    # find . -name .gitattributes | map dirname
+    alias map="xargs -n1"
 
-		# Lock the screen (when going AFK)
-		alias afk="/System/Library/CoreServices/Menu\ Extras/User.menu/Contents/Resources/CGSession -suspend"
+    # Lock the screen (when going AFK)
+    alias afk="/System/Library/CoreServices/Menu\ Extras/User.menu/Contents/Resources/CGSession -suspend"
 
-		# Print each PATH entry on a separate line
-		alias path='echo -e ${PATH//:/\\n}'
+    # Print each PATH entry on a separate line
+    alias path='echo -e ${PATH//:/\\n}'
   }
 
   setup_environment() {
