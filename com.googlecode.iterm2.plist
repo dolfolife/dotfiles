@@ -88,7 +88,7 @@
 	<key>NSWindow Frame SharedPreferences</key>
 	<string>311 247 796 486 0 0 1920 1057 </string>
 	<key>NSWindow Frame iTerm Window 0</key>
-	<string>120 590 665 452 0 0 1920 1057 </string>
+	<string>0 0 1920 1057 0 0 1920 1057 </string>
 	<key>NSWindow Frame iTerm Window 1</key>
 	<string>960 480 905 577 0 0 1920 1057 </string>
 	<key>NSWindow Frame iTerm Window 2</key>
@@ -648,7 +648,7 @@
 			<key>Screen</key>
 			<integer>-1</integer>
 			<key>Scrollback Lines</key>
-			<integer>1000</integer>
+			<integer>0</integer>
 			<key>Selected Text Color</key>
 			<dict>
 				<key>Blue Component</key>
