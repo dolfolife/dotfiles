@@ -53,6 +53,23 @@ main() {
     # setup path
     export PATH=$GOPATH/bin:$PATH:/usr/local/go/bin:$HOME/scripts:/usr/local/opt/apr/bin:/usr/local/opt/apr-util/bin
     export EDITOR=nvim
+    export FZF_COMPLETION_TRIGGER='~~'
+    export FZF_COMPLETION_OPTS='+c -x'
+    export FZF_DEFAULT_OPTS='--height 40% --layout=reverse --border --inline-info'
+  }
+
+  setup_fzf() {
+    _fzf_compgen_path() {
+      fd --hidden --follow --exclude ".git" . "$1"
+    }
+
+    # Use fd to generate the list for directory completion
+    _fzf_compgen_dir() {
+      fd --type d --hidden --follow --exclude ".git" . "$1"
+    }
+
+    complete -F _fzf_path_completion -o default -o bashdefault ag
+    complete -F _fzf_dir_completion -o default -o bashdefault tree
   }
 
   setup_rbenv() {
@@ -133,6 +150,7 @@ main() {
         gitprompt
         gpg_config
         ssh_agent
+        fzf
       )
 
   for dependency in "${dependencies[@]}"; do
