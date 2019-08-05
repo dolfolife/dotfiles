@@ -56,6 +56,7 @@ main() {
     export FZF_COMPLETION_TRIGGER='~~'
     export FZF_COMPLETION_OPTS='+c -x'
     export FZF_DEFAULT_OPTS='--height 40% --layout=reverse --border --inline-info'
+    export PATH=/usr/local/sbin:$PATH
   }
 
   setup_fzf() {
