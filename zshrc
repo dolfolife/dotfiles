@@ -1,5 +1,3 @@
-#!/usr/bin/env bash
-
 main() {
   setup_aliases() {
     alias vim=nvim
@@ -41,6 +39,10 @@ main() {
 
     # Print each PATH entry on a separate line
     alias path='echo -e ${PATH//:/\\n}'
+
+    # kubernetes alias
+    alias k=kubectl
+    alias pods="k get pods"
   }
 
   setup_environment() {
@@ -68,49 +70,26 @@ main() {
     _fzf_compgen_dir() {
       fd --type d --hidden --follow --exclude ".git" . "$1"
     }
-
-    complete -F _fzf_path_completion -o default -o bashdefault ag
-    complete -F _fzf_dir_completion -o default -o bashdefault tree
   }
 
   setup_rbenv() {
     eval "$(rbenv init -)"
   }
 
-  setup_aws() {
-    # set awscli auto-completion
-    complete -C aws_completer aws
-  }
-
   setup_fasd() {
     local fasd_cache
-    fasd_cache="$HOME/.fasd-init-bash"
+    fasd_cache="$HOME/.fasd-init-zsh"
 
     if [ "$(command -v fasd)" -nt "$fasd_cache" -o ! -s "$fasd_cache" ]; then
-      fasd --init posix-alias bash-hook bash-ccomp bash-ccomp-install >| "$fasd_cache"
+      fasd --init posix-alias zsh-hook zsh-ccomp zsh-ccomp-install >| "$fasd_cache"
     fi
 
     source "$fasd_cache"
     eval "$(fasd --init auto)"
   }
 
-  setup_completions() {
-    [ -f /usr/local/etc/bash_completion ] && . /usr/local/etc/bash_completion
-  }
-
   setup_direnv() {
-    eval "$(direnv hook bash)"
-  }
-
-  setup_gitprompt() {
-    if [ -f "$(brew --prefix)/opt/bash-git-prompt/share/gitprompt.sh" ]; then
-      # git prompt config
-      export GIT_PROMPT_SHOW_UNTRACKED_FILES=normal
-      export GIT_PROMPT_ONLY_IN_REPO=0
-      export GIT_PROMPT_THEME="Custom"
-
-      source "$(brew --prefix)/opt/bash-git-prompt/share/gitprompt.sh"
-    fi
+    eval "$(direnv hook zsh)"
   }
 
   setup_colors() {
@@ -130,12 +109,29 @@ main() {
   }
 
   setup_gpg_config() {
-    local status
-    status=$(gpg --card-status &> /dev/null; echo $?)
+    local gpg_status=$(gpg --card-status &> /dev/null; echo $?)
 
-    if [[ "$status" == "0" ]]; then
+    if [[ "$gpg_status" == "0" ]]; then
       export SSH_AUTH_SOCK="${HOME}/.gnupg/S.gpg-agent.ssh"
     fi
+  }
+
+  setup_starship() {
+    ln -sf starship.toml ~/.config/starship.toml
+
+    function set_win_title(){
+      local CfTarget="$(cf-target)"
+      local GoBoshTarget="${BOSH_ENV}"
+      local KubeCluster="$(if [ -f ~/.kube/config ]; then
+                            kubectl config current-context
+                          fi)"
+  
+      echo -ne "\033]0; bosh: ${GoBoshTarget} | kube-cluster: ${KubeCluster} | cf: ${CfTarget} \007"
+    }
+  
+    
+    precmd_functions+=(set_win_title)
+    eval "$(starship init zsh)"
   }
 
   local dependencies
@@ -144,13 +140,11 @@ main() {
         environment
         colors
         rbenv
-        aws
         fasd
-        completions
         direnv
-        gitprompt
         gpg_config
         ssh_agent
+        starship
         fzf
       )
 
@@ -160,8 +154,7 @@ main() {
   done
 
 	# Autocorrect typos in path names when using `cd`
-  shopt -s cdspell;
-
+  setopt autocd;
 }
 
 main
@@ -170,7 +163,7 @@ unset -f main
 # FUNCTIONS
 
 function reload() {
-  source "${HOME}/.bash_profile"
+  source "${HOME}/.zshrc"
 }
 
 

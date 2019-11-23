@@ -7,8 +7,12 @@ skip="${1:-}"
 main() {
   confirm
 
-#  install_brew
-#  install_brew_packages
+  echo "Add daily workstation installation to launchd..."
+  cp ~/workspace/dotfiles/workstation.install.daily.plist ~/Library/LaunchAgents/workstation.install.daily.plist
+  launchctl load ~/Library/LaunchAgents/workstation.install.daily.plist
+
+  install_brew
+  install_brew_packages
 
   setup_git
   setup_ssh
@@ -84,8 +88,8 @@ setup_git() {
   echo "Symlink the git-authors file to .git-authors..."
   ln -sf "$(pwd)/git-authors" "${HOME}/.git-authors"
 
-  echo "Copy the bash_profile file into .bash_profile"
-  ln -sf "$(pwd)/bash_profile" "${HOME}/.bash_profile"
+  echo "Copy the zshrc file into .zshrc"
+  ln -sf "$(pwd)/zshrc" "${HOME}/.zshrc"
 
   echo "Copy the gitconfig file into ~/.gitconfig..."
   cp -rf "$(pwd)/gitconfig" "${HOME}/.gitconfig"
@@ -95,9 +99,6 @@ setup_git() {
 
   echo "Link global .gitignore"
   ln -sf "$(pwd)/global-gitignore" "${HOME}/.global-gitignore"
-
-  echo "link global .git-prompt-colors.sh"
-  ln -sf "$(pwd)/git-prompt-colors.sh" "${HOME}/.git-prompt-colors.sh"
 }
 
 setup_ssh() {
@@ -180,10 +181,8 @@ install_nvimfiles() {
 
   echo "Installing python-client for neovim..."
   pip3 install neovim
-  pip2 install neovim
 
   echo "Adding yamllint for neomake..."
-  pip2 install -q yamllint
   pip3 install -q yamllint
 
   echo "Installing neovim in npm..."
@@ -200,12 +199,6 @@ install_nvimfiles() {
   else
     clone_if_not_exist https://github.com/luan/nvim "${HOME}/.config/nvim"
   fi
-
-  echo "Adding configuration to nvim..."
-  mkdir -p "${HOME}/.config/nvim/user"
-  ln -sf "$(pwd)/before.vim" "${HOME}/.config/nvim/user/before.vim"
-  ln -sf "$(pwd)/plug.vim" "${HOME}/.config/nvim/user/plug.vim"
-  ln -sf "$(pwd)/after.vim" "${HOME}/.config/nvim/user/after.vim"
 
   echo "Copy snippets..."
   mkdir -p "${HOME}/.vim/UltiSnips"
@@ -233,7 +226,7 @@ install_go_deps() {
 
 install_colorschemes() {
   echo "Cloning colorschemes..."
-  clone_if_not_exist https://github.com/chriskempson/base16-shell.git "${HOME}/.config/colorschemes"
+  clone_if_not_exist https://github.com/chriskempson/base16-shell.git "${HOME}/.config/base16-shell"
 }
 
 install_tmuxfiles() {

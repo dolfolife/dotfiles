@@ -1,0 +1,7 @@
+[kubernetes]
+symbol = "⛵ "
+style = "dim green"
+disabled = false
+
+[line_break]
+disabled = true

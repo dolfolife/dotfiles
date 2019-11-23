@@ -1,5 +1,5 @@
 # Workstation Configuration
-Simple bash scripts for my terminal
+Simple zsh scripts for my terminal
 
 # Install
 
