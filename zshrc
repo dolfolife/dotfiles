@@ -117,20 +117,8 @@ main() {
   }
 
   setup_starship() {
-    ln -sf starship.toml ~/.config/starship.toml
+    ln -sf $HOME/workspace/dotfiles/starship.toml ~/.config/starship.toml
 
-    function set_win_title(){
-      local CfTarget="$(cf-target)"
-      local GoBoshTarget="${BOSH_ENV}"
-      local KubeCluster="$(if [ -f ~/.kube/config ]; then
-                            kubectl config current-context
-                          fi)"
-  
-      echo -ne "\033]0; bosh: ${GoBoshTarget} | kube-cluster: ${KubeCluster} | cf: ${CfTarget} \007"
-    }
-  
-    
-    precmd_functions+=(set_win_title)
     eval "$(starship init zsh)"
   }
 
@@ -157,6 +145,7 @@ main() {
   setopt autocd;
 }
 
+mainpath="$0:A"
 main
 unset -f main
 
@@ -251,3 +240,5 @@ function clear_port() { # Finds whatever is using a given port (except chrome) a
 function v() { # Use fasd to open a file in vim from anywhere
   nvim `f "$1" | awk "{print $2}"`
 }
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
