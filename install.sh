@@ -237,8 +237,31 @@ install_tmuxfiles() {
       echo "If you'd like to update your tmux files, please kill all of your tmux sessions and run this script again."
       exit 1
     else
-      clone_if_not_exist "https://github.com/luan/tmuxfiles" "${HOME}/workspace/tmuxfiles"
-      "${HOME}/workspace/tmuxfiles/install"
+      mkdir -p ~/.tmux/plugins/
+
+      if [[ -f ~/.tmux.conf && "$(readlink -f ~/.tmux.conf)" != "$(pwd)/tmux.conf" ]]; then
+        echo -n "Existing ~/.tmux.conf found. Overwrite? (y/N) "
+        read -r response
+        if [[ "${response}" == "y" ]]; then
+          rm -f ~/.tmux.conf
+        else
+          echo "${RED}Installation aborted.${END_COLOR}"
+          exit 1
+        fi
+      fi
+
+      if [[ ! -L ~/.tmux.conf ]]; then
+        ln -s "$(pwd)/tmux.conf" ~/.tmux.conf
+      fi
+
+      if [[ ! -d ~/.tmux/plugins/tpm ]]; then
+        git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+     fi
+
+      ~/.tmux/plugins/tpm/bin/install_plugins
+      ~/.tmux/plugins/tpm/bin/update_plugins all
+      ~/.tmux/plugins/tpm/bin/clean_plugins
+
     fi
   set -e
 }
