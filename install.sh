@@ -219,9 +219,6 @@ install_go_deps() {
 
   echo "Installing counterfeiter..."
   GOPATH="${HOME}/go" go get -u github.com/maxbrunsfeld/counterfeiter
-
-  echo "Installing cf-target..."
-  GOPATH="${HOME}/go" go get -u github.com/dbellotti/cf-target
 }
 
 install_colorschemes() {
