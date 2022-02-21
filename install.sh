@@ -8,7 +8,7 @@ main() {
   confirm
 
   echo "Add daily workstation installation to launchd..."
-  cp ~/workspace/dotfiles/workstation.install.daily.plist ~/Library/LaunchAgents/workstation.install.daily.plist
+  cp $(pwd)/workstation.install.daily.plist ~/Library/LaunchAgents/workstation.install.daily.plist
   launchctl load ~/Library/LaunchAgents/workstation.install.daily.plist
 
   install_brew
