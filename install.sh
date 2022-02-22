@@ -126,7 +126,7 @@ EOF
 }
 
 install_ruby() {
-  ruby_version=2.4.2
+  ruby_version=3.1.1
   echo "Installing ruby $ruby_version..."
   rbenv install -s $ruby_version
   rbenv global $ruby_version
