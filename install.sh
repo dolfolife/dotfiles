@@ -139,8 +139,8 @@ install_ruby() {
   gem install bundler
 
   echo "Creating workspace..."
-  workspace=${HOME}/workspace
-  mkdir -p "$workspace"
+  workstation=${HOME}/workstation
+  mkdir -p "$workstation"
 
   echo "Creating go/src..."
   go_src=${HOME}/go/src
