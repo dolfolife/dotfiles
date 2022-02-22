@@ -185,6 +185,9 @@ install_nvimfiles() {
   echo "Adding yamllint for neomake..."
   pip3 install -q yamllint
 
+  echo "installing Pynvim for neovim"
+
+  pip3 install --upgrade pynvim
   echo "Installing neovim in npm..."
   npm install -g neovim
 
@@ -196,9 +199,9 @@ install_nvimfiles() {
     rm -rf "${HOME}/.config/vim"
     rm -rf "${HOME}/.config/nvim"
     rm -rf "${HOME}/*.vim"
-  else
-    clone_if_not_exist https://github.com/luan/nvim "${HOME}/.config/nvim"
   fi
+
+  clone_if_not_exist https://github.com/luan/nvim "${HOME}/.config/nvim"
 
   echo "Copy snippets..."
   mkdir -p "${HOME}/.vim/UltiSnips"
