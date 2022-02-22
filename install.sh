@@ -209,16 +209,13 @@ install_nvimfiles() {
 
 install_go_deps() {
   echo "Installing hclfmt..."
-  GOPATH="${HOME}/go" go get -u github.com/fatih/hclfmt
+  GOPATH="${HOME}/go" go install github.com/fatih/hclfmt@latest
 
   echo "Installing ginkgo..."
-  GOPATH="${HOME}/go" go get -u github.com/onsi/ginkgo/ginkgo
+  GOPATH="${HOME}/go" go install github.com/onsi/ginkgo/ginkgo@latest
 
   echo "Installing gomega..."
   GOPATH="${HOME}/go" go get -u github.com/onsi/gomega
-
-  echo "Installing counterfeiter..."
-  GOPATH="${HOME}/go" go get -u github.com/maxbrunsfeld/counterfeiter
 }
 
 install_colorschemes() {
