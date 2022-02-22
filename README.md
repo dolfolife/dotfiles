@@ -15,7 +15,7 @@ risk!
   sudo xcodebuild -license  # follow the interactive prompts
   mkdir -p ~/workspace
   cd ~/workspace
-  git clone https://github.com/rodolfo2488/dotfiles
+  git clone https://github.com/dolfolife/dotfiles
   cd dotfiles
   ./install.sh
   ```
