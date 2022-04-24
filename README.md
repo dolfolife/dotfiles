@@ -1,4 +1,4 @@
-# Workstation Configuration
+# workspace Configuration
 Simple zsh scripts for my terminal
 
 # Install

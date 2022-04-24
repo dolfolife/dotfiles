@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
     <key>Label</key>
-    <string>local.workstation.install.daily</string>
+    <string>local.workspace.install.daily</string>
     <key>KeepAlive</key>
     <false/>
     <key>RunAtLoad</key>

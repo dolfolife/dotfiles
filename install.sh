@@ -7,9 +7,9 @@ skip="${1:-}"
 main() {
   confirm
 
-  echo "Add daily workstation installation to launchd..."
-  cp $(pwd)/workstation.install.daily.plist ~/Library/LaunchAgents/workstation.install.daily.plist
-  launchctl load ~/Library/LaunchAgents/workstation.install.daily.plist
+  echo "Add daily workspace installation to launchd..."
+  cp $(pwd)/workspace.install.daily.plist ~/Library/LaunchAgents/workspace.install.daily.plist
+  launchctl load ~/Library/LaunchAgents/workspace.install.daily.plist
 
   install_brew
   install_brew_packages
@@ -31,7 +31,7 @@ main() {
 
   install_tmuxfiles
 
-  echo "Workstation setup complete — open a new window to apply all settings! 🌈"
+  echo "workspace setup complete — open a new window to apply all settings! 🌈"
 }
 
 clone_if_not_exist() {
@@ -139,8 +139,8 @@ install_ruby() {
   gem install bundler
 
   echo "Creating workspace..."
-  workstation=${HOME}/workstation
-  mkdir -p "$workstation"
+  workspace=${HOME}/workspace
+  mkdir -p "$workspace"
 
   echo "Creating go/src..."
   go_src=${HOME}/go/src
