@@ -12,6 +12,7 @@ main() {
 
   setup_git
   setup_ssh
+  setup_nvim
 
   install_gpg
   install_sshb0t
@@ -87,6 +88,14 @@ setup_git() {
 
   echo "Copy the inputrc file into ~/.inputrc..."
   ln -sf "$(pwd)/inputrc" "${HOME}/.inputrc"
+}
+
+setup_nvim() {
+
+  echo "Copy the nvim folder into ~/.config/nvim ..."
+  ln -sf "$(pwd)/nvim" "${HOME}/.config/nvim"
+
+  clone_if_not_exist https://github.com/wbthomason/packer.nvim "${HOME}/.local/share/nvim/site/pack/packer/start/packer.nvim"
 }
 
 setup_ssh() {
