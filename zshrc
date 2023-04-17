@@ -229,5 +229,4 @@ function v() { # Use fasd to open a file in vim from anywhere
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 alias python=/usr/bin/python3
 
-# Created by `pipx` on 2022-08-02 00:02:00
-export PATH="$PATH:/Users/srodolfo/.local/bin"
+export PATH="$PATH:$HOME/.local/bin"

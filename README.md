@@ -13,19 +13,14 @@ risk!
 - open **Terminal**, load your SSH key and run
   ```
   sudo xcodebuild -license  # follow the interactive prompts
-  mkdir -p ~/workspace
-  cd ~/workspace
-  git clone https://github.com/dolfolife/dotfiles
+  git clone -–depth 1 https://github.com/dolfolife/dotfiles
   cd dotfiles
+  <Change Github config>
   ./install.sh
   ```
 
-- If you encounter problems with the script, fix them and re-run!
-
-To load iTerm preferences, point to this directory under `iTerm2` >
-`Preferences` > `Load preferences from a custom folder or URL`.
-
 ## patterns and assumptions
-- keep it simple
-- declarative and idempotent
-- install as much as possible via brew
+- Keep it simple
+- Declarative and idempotent
+- Install as much as possible via brew
+
