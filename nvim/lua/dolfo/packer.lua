@@ -9,11 +9,11 @@ return require('packer').startup(function(use)
         requires = { {'nvim-lua/plenary.nvim'} }
     })
     use({
-        'rose-pine/neovim',
-        as = 'rose-pine',  
+        'catppuccin/nvim',
+        as = 'catppuccin',
         config = function()
-            require("rose-pine").setup()
-            vim.cmd('colorscheme rose-pine')
+            require("catppuccin").setup()
+            vim.cmd('colorscheme catppuccin')
         end
     })
     use({
