@@ -96,6 +96,7 @@ setup_nvim() {
   ln -sf "$(pwd)/nvim" "${HOME}/.config/nvim"
 
   clone_if_not_exist https://github.com/wbthomason/packer.nvim "${HOME}/.local/share/nvim/site/pack/packer/start/packer.nvim"
+  clone_if_not_exist https://github.com/github/copilot.vim.git "${HOME}/.config/nvim/pack/github/start/copilot.vim"
 }
 
 setup_ssh() {
