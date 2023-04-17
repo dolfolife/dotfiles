@@ -29,9 +29,6 @@ To load iTerm preferences, point to this directory under `iTerm2` >
 - keep it simple
 - declarative and idempotent
 - install as much as possible via brew
-- ruby version will be `2.4.2`
-- [luan vim](https://github.com/luan/nvim) and [luan
-  tmux](https://github.com/luan/tmuxfiles)
 
 # Sensible macOS defaults
 When setting up a new Mac, you may want to set some sensible macOS defaults:

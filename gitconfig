@@ -1,7 +1,6 @@
 [alias]
-  blog = "log origin/master... --left-right"
+  blog = "log origin/main... --left-right"
   br = branch
-  ci = duet-commit
   co = checkout
   di = diff
   drb = rebase -i --exec 'git duet-commit --amend --reset-author'
@@ -12,7 +11,7 @@
   llog = "log --date=local"
   lol = "log --graph --decorate --oneline"
   lola = "log --graph --decorate --oneline --all"
-  rum = "rebase master@{u}"
+  rum = "rebase main@{u}"
   squash = "commit --squash"
   st = status
   sta = stash

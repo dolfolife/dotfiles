@@ -3,19 +3,8 @@ main() {
     alias vim=nvim
     alias vi=nvim
     alias ll="ls -al"
-    alias be="bundle exec"
-    alias bake="bundle exec rake"
     alias drm='docker rm $(docker ps -a -q)'
     alias drmi='docker rmi $(docker images -q)'
-    alias bosh2=bosh
-
-    #git aliases
-    alias gst="git status"
-    alias gd="git diff"
-    alias gap="git add -p"
-    alias gup="git pull -r"
-    alias gp="git push"
-    alias ga="git add"
 
     alias h\?="history | grep"
 
@@ -42,7 +31,6 @@ main() {
 
     # kubernetes alias
     alias k=kubectl
-    alias pods="k get pods"
   }
 
   setup_environment() {
@@ -59,6 +47,10 @@ main() {
     export FZF_COMPLETION_OPTS='+c -x'
     export FZF_DEFAULT_OPTS='--height 40% --layout=reverse --border --inline-info'
     export PATH=/usr/local/sbin:$PATH
+    export PATH=/usr/local/opt/gnu-tar/libexec/gnubin:$PATH
+    export PATH=/usr/local/opt/grep/libexec/gnubin:$PATH
+    export PATH=/usr/local/opt/gnu-sed/libexec/gnubin:$PATH
+    export PATH=/usr/local/opt/coreutils/libexec/gnubin:$PATH
   }
 
   setup_fzf() {
@@ -72,10 +64,6 @@ main() {
     }
   }
 
-  setup_rbenv() {
-    eval "$(rbenv init -)"
-  }
-
   setup_fasd() {
     local fasd_cache
     fasd_cache="$HOME/.fasd-init-zsh"
@@ -85,17 +73,12 @@ main() {
     fi
 
     source "$fasd_cache"
+    unset fasd_cache
     eval "$(fasd --init auto)"
   }
 
   setup_direnv() {
     eval "$(direnv hook zsh)"
-  }
-
-  setup_colors() {
-    local colorscheme
-    colorscheme="${HOME}/.config/colorschemes/scripts/base16-monokai.sh"
-    [[ -s "${colorscheme}" ]] && source "${colorscheme}"
   }
 
   setup_ssh_agent() {
@@ -108,32 +91,41 @@ main() {
     export SSH_AUTH_SOCK=~/.ssh_agent
   }
 
-  setup_gpg_config() {
-    local gpg_status=$(gpg --card-status &> /dev/null; echo $?)
-
-    if [[ "$gpg_status" == "0" ]]; then
-      export SSH_AUTH_SOCK="${HOME}/.gnupg/S.gpg-agent.ssh"
-    fi
+  setup_colors() {
+    local colorscheme
+    colorscheme="${HOME}/.config/colorschemes/scripts/base16-monokai.sh"
+    [[ -s "${colorscheme}" ]] && source "${colorscheme}"
   }
 
   setup_starship() {
-    ln -sf $HOME/workspace/dotfiles/starship.toml ~/.config/starship.toml
+    ln -sf $HOME/dolfolife/dotfiles/starship.toml ~/.config/starship.toml
 
     eval "$(starship init zsh)"
   }
 
+  setup_nvm() {
+    export NVM_DIR="$HOME/.nvm"
+    [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+    [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+  }
+
+  setup_pyenv() {
+    export PYENV_ROOT="$HOME/.pyenv"
+    command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
+    eval "$(pyenv init -)"
+  }
   local dependencies
     dependencies=(
         aliases
-        environment
         colors
-        rbenv
-        fasd
         direnv
-        gpg_config
+        environment
+        fasd
+        fzf
+        nvm
+        pyenv
         ssh_agent
         starship
-        fzf
       )
 
   for dependency in "${dependencies[@]}"; do
@@ -173,6 +165,7 @@ default_hours() {
 function current_branch() { # Gets current branch
   git rev-parse --abbrev-ref HEAD
 }
+
 
 function parse_branch() { # Gets current branch with parens around it for some legacy things
   git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ (\1)/'
@@ -217,14 +210,6 @@ function loop() { # Repeats a given command forever
   done
 }
 
-function server() { # Create webserver from current directory
-  local port="${1:-8000}";
-  sleep 1 && open "http://localhost:${port}/" &
-  # Set the default Content-Type to `text/plain` instead of `application/octet-stream`
-  # And serve everything as UTF-8 (although not technically correct, this doesn’t break anything for binary files)
-  python -c $'import SimpleHTTPServer;\nmap = SimpleHTTPServer.SimpleHTTPRequestHandler.extensions_map;\nmap[""] = "text/plain";\nfor key, value in map.items():\n\tmap[key] = value + ";charset=UTF-8";\nSimpleHTTPServer.test();' "$port";
-}
-
 function nuke() { # Straight up murders all processes matching first arg
   ps ax | grep $1 | awk '{print $1}' | xargs kill -9
 }
@@ -242,3 +227,7 @@ function v() { # Use fasd to open a file in vim from anywhere
 }
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+alias python=/usr/bin/python3
+
+# Created by `pipx` on 2022-08-02 00:02:00
+export PATH="$PATH:/Users/srodolfo/.local/bin"

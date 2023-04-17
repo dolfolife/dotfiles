@@ -7,10 +7,6 @@ skip="${1:-}"
 main() {
   confirm
 
-  echo "Add daily workspace installation to launchd..."
-  cp $(pwd)/workspace.install.daily.plist ~/Library/LaunchAgents/workspace.install.daily.plist
-  launchctl load ~/Library/LaunchAgents/workspace.install.daily.plist
-
   install_brew
   install_brew_packages
 
@@ -18,10 +14,7 @@ main() {
   setup_ssh
 
   install_gpg
-  install_ruby
   install_sshb0t
-  install_nvimfiles
-  install_go_deps
 
   install_colorschemes
 
@@ -85,8 +78,6 @@ install_brew_packages() {
 }
 
 setup_git() {
-  echo "Symlink the git-authors file to .git-authors..."
-  ln -sf "$(pwd)/git-authors" "${HOME}/.git-authors"
 
   echo "Copy the zshrc file into .zshrc"
   ln -sf "$(pwd)/zshrc" "${HOME}/.zshrc"
@@ -96,9 +87,6 @@ setup_git() {
 
   echo "Copy the inputrc file into ~/.inputrc..."
   ln -sf "$(pwd)/inputrc" "${HOME}/.inputrc"
-
-  echo "Link global .gitignore"
-  ln -sf "$(pwd)/global-gitignore" "${HOME}/.global-gitignore"
 }
 
 setup_ssh() {
@@ -125,100 +113,14 @@ EOF
   fi
 }
 
-install_ruby() {
-  ruby_version=3.1.1
-  echo "Installing ruby $ruby_version..."
-  rbenv install -s $ruby_version
-  rbenv global $ruby_version
-  rm -f ~/.ruby-version
-  eval "$(rbenv init -)"
-  echo "Symlink the gemrc file to .gemrc..."
-  ln -sf "$(pwd)/gemrc" "${HOME}/.gemrc"
-
-  echo "Install the bundler gem..."
-  gem install bundler
-
-  echo "Creating workspace..."
-  workspace=${HOME}/workspace
-  mkdir -p "$workspace"
-
-  echo "Creating go/src..."
-  go_src=${HOME}/go/src
-  if [ ! -e "${go_src}" ]; then
-    mkdir -pv "${HOME}/go/src"
-  fi
-
-  if [ -L "${go_src}" ]; then
-    echo "${go_src} exists, but is a symbolic link"
-  fi
-}
 
 install_sshb0t() {
-  latest_tag=$(curl -s https://api.github.com/repos/genuinetools/sshb0t/releases/latest | jq -r .tag_name)
-
-  # If the curl to the github api fails, use latest known version
-  if [[ "$latest_tag" == "null" ]]; then
-    latest_tag="v0.3.5"
-  fi
-
-  # Export the sha256sum for verification.
-  sshb0t_sha256=$(curl -sL "https://github.com/genuinetools/sshb0t/releases/download/${latest_tag}/sshb0t-darwin-amd64.sha256" | cut -d' ' -f1)
-
-  # Download and check the sha256sum.
-  curl -fSL "https://github.com/genuinetools/sshb0t/releases/download/${latest_tag}/sshb0t-darwin-amd64" -o "/usr/local/bin/sshb0t" \
-    && echo "${sshb0t_sha256}  /usr/local/bin/sshb0t" | shasum -a 256 -c - \
-    && chmod a+x "/usr/local/bin/sshb0t"
+  go install github.com/genuinetools/sshb0t@latest
 
   echo "sshb0t installed!"
 
   sshb0t --once \
-    --user rodolfo2488
-}
-
-install_nvimfiles() {
-  echo "Updating pip..."
-  pip3 install --upgrade pip
-
-  echo "Installing python-client for neovim..."
-  pip3 install neovim
-
-  echo "Adding yamllint for neomake..."
-  pip3 install -q yamllint
-
-  echo "installing Pynvim for neovim"
-
-  pip3 install --upgrade pynvim
-  echo "Installing neovim in npm..."
-  npm install -g neovim
-
-  echo "Installing neovim in gem..."
-  gem install neovim
-
-  if [[ -f ${HOME}/.config/vim ]]; then
-    echo "removing ~/.config/vim dir && ~/.config/nvim"
-    rm -rf "${HOME}/.config/vim"
-    rm -rf "${HOME}/.config/nvim"
-    rm -rf "${HOME}/*.vim"
-  fi
-
-  clone_if_not_exist https://github.com/luan/nvim "${HOME}/.config/nvim"
-
-  echo "Copy snippets..."
-  mkdir -p "${HOME}/.vim/UltiSnips"
-
-  echo "Symlink the go.snippets to .vim/UltiSnips..."
-  ln -sf "$(pwd)/go.snippets" "${HOME}/.vim/UltiSnips"
-}
-
-install_go_deps() {
-  echo "Installing hclfmt..."
-  GOPATH="${HOME}/go" go install github.com/fatih/hclfmt@latest
-
-  echo "Installing ginkgo..."
-  GOPATH="${HOME}/go" go install github.com/onsi/ginkgo/ginkgo@latest
-
-  echo "Installing gomega..."
-  GOPATH="${HOME}/go" go get -u github.com/onsi/gomega
+    --user dolfolife
 }
 
 install_colorschemes() {
