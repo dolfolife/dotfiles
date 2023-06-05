@@ -9,6 +9,7 @@ lsp.ensure_installed({
     'hls',
     'jsonls',
     'eslint',
+    'pyright',
     'tsserver'
 })
 
