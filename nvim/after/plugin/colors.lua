@@ -1,18 +1,19 @@
 require('catppuccin').setup({
-    disable_background = true,
+    show_end_of_buffer = true,
     integrations = {
+        treesitter = true,
+        harpoon = true,
         mason = true,
-        telescope = true,
-    },
-    transparent_background = true
+        telescope = {
+            enabled = true,
+            -- style = "nvchad"
+        },
+    }
 })
 
 function ColorMe(color)
 	color = color or "catppuccin"
 	vim.cmd.colorscheme(color)
-
-	vim.api.nvim_set_hl(0, "Normal", { bg = "none" })
-	vim.api.nvim_set_hl(0, "NormalFloat", { bg = "none" })
 end
 
 ColorMe()

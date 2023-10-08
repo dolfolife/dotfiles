@@ -3,6 +3,7 @@ vim.cmd [[packadd packer.nvim]]
 return require('packer').startup(function(use)
     -- Packer can manage itself
     use('wbthomason/packer.nvim')
+
     use({
         'nvim-telescope/telescope.nvim', tag = '0.1.1',
         -- or                            , branch = '0.1.x',
@@ -14,7 +15,7 @@ return require('packer').startup(function(use)
         config = function()
             require("catppuccin").setup()
             vim.cmd('colorscheme catppuccin')
-        end
+	    end,
     })
     use({
         'nvim-treesitter/nvim-treesitter',
@@ -58,6 +59,5 @@ return require('packer').startup(function(use)
     use("folke/zen-mode.nvim")
     use("github/copilot.vim")
     use("christoomey/vim-tmux-navigator")
-    use { 'sourcegraph/sg.nvim', run = 'nvim -l build/init.lua' }
 
 end)
