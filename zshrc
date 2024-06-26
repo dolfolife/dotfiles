@@ -51,6 +51,8 @@ main() {
     export PATH=/usr/local/opt/grep/libexec/gnubin:$PATH
     export PATH=/usr/local/opt/gnu-sed/libexec/gnubin:$PATH
     export PATH=/usr/local/opt/coreutils/libexec/gnubin:$PATH
+    GPG_TTY=$(tty)
+    export GPG_TTY
   }
 
   setup_fzf() {
