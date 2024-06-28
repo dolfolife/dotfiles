@@ -1,0 +1,40 @@
+[alias]
+  blog = "log origin/main... --left-right"
+  br = branch
+  co = checkout
+  di = diff
+  drb = rebase -i --exec 'git duet-commit --amend --reset-author'
+  ds = "diff --staged"
+  fixup = "commit --fixup"
+  flog = "log --pretty=fuller --decorate"
+  lg = "log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative"
+  llog = "log --date=local"
+  lol = "log --graph --decorate --oneline"
+  lola = "log --graph --decorate --oneline --all"
+  rum = "rebase main@{u}"
+  squash = "commit --squash"
+  st = status
+  sta = stash
+  su = submodule update --init --recursive
+  unstage = "reset HEAD"
+[core]
+  editor = nvim
+  excludesfile = ~/.shared-gitignore
+[url "git@gist.github.com:"]
+  pushInsteadOf = https://gist.github.com/
+  pushInsteadOf = git://gist.github.com/
+[url "git@github.com:"]
+  pushInsteadOf = https://github.com/
+  pushInsteadOf = git://github.com/
+[push]
+  default = simple
+  recurseSubmodules = check
+[submodule]
+  fetchJobs = 6
+[diff]
+  compactionHeuristic = true
+[status]
+  submoduleSummary = true
+[user]
+  email = me@dolfo.codes
+  name = Rodolfo Sanchez

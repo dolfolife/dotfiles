@@ -1,26 +1,28 @@
-# workspace Configuration
-Simple zsh scripts for my terminal
+# Dotfiles
 
-# Install
+This is a group of scripts I use to maintain order and consistency across the environments I use code.
 
+## Usage
+
+```bash
+git clone https://github.com/dolfolife/dotfiles.git ~/dotfiles
+cd ~/dotfiles
+make help
 ```
-Warning: If you want to give these scripts a try, you should first fork this
-repository, review the code, and remove things you don’t want or need. Don’t
-blindly use my settings unless you know what that entails. Use at your own
-risk!
+
+## Architecture
+
+There are options for MacOS, Ubuntu (WSL), Windows Powershell, and Cygwin.
+The install scripts should run the right set of scripts based on the `$OSTYPE` environment variable.
+
+
+## Modes
+There are a set of extra information depending on the workstation I use.
+For example, I add 1password and the personal GPG key in personal computers.
+For this, I separated the levels of install you can work and add your own wrapper.
+
+```bash
+make install DOMAIN=<company.domain> 
 ```
-
-- open **Terminal**, load your SSH key and run
-  ```
-  sudo xcodebuild -license  # follow the interactive prompts
-  git clone -–depth 1 https://github.com/dolfolife/dotfiles
-  cd dotfiles
-  <Change Github config>
-  ./install.sh
-  ```
-
-## patterns and assumptions
-- Keep it simple
-- Declarative and idempotent
-- Install as much as possible via brew
+> Note: make sure `company.domain` folder is at the root of your dotfiles
 

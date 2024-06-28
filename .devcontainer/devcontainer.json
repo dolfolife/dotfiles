@@ -1,0 +1,23 @@
+{
+    "name": "Dolfo's DevContainer",
+    "dockerFile": "Dockerfile",
+    "context": "..",
+    "settings": {
+        "terminal.integrated.shell.linux": "/bin/bash"
+    },
+    "extensions": [
+        "ms-python.python",
+        "ms-vscode.cpptools",
+        "ms-azuretools.vscode-docker",
+        "eamodio.gitlens",
+        "esbenp.prettier-vscode",
+        "dbaeumer.vscode-eslint",
+        "shardulm94.trailing-spaces"
+    ],
+    "postCreateCommand": "cd ~/dotfiles && ./install.sh",
+    "remoteUser": "dolfo",
+    "mounts": [
+        "source=${localEnv:HOME}/.ssh,target=/home/devuser/.ssh,type=bind,consistency=cached",
+        "source=${localEnv:HOME}/.gitconfig,target=/home/devuser/.gitconfig,type=bind,consistency=cached"
+    ]
+}
