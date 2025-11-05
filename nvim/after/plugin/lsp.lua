@@ -11,7 +11,7 @@ lsp.ensure_installed({
     'jsonls',
     'eslint',
     'pyright',
-    'tsserver'
+    'ts_ls'
 })
 
 
@@ -25,7 +25,6 @@ lsp.on_attach(function(client, bufnr)
   vim.keymap.set("n", "K", function() vim.lsp.buf.hover() end, opts)
   vim.keymap.set("n", "<leader>ds", function() vim.lsp.buf.document_symbol() end, opts)
   vim.keymap.set("n", "<leader>ws", function() vim.lsp.buf.workspace_symbol() end, opts)
-
   vim.keymap.set("n", "<leader>vd", function() vim.diagnostic.open_float() end, opts)
   vim.keymap.set("n", "[d", function() vim.diagnostic.goto_next() end, opts)
   vim.keymap.set("n", "]d", function() vim.diagnostic.goto_prev() end, opts)
