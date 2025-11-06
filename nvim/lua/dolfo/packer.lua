@@ -24,26 +24,11 @@ return require('packer').startup(function(use)
     use('ThePrimeagen/harpoon')
     use('mbbill/undotree')
     use('tpope/vim-fugitive')
-    use({
-        'VonHeikemen/lsp-zero.nvim',
-        branch = 'v2.x',
-        requires = {
-            -- LSP Support
-            {'neovim/nvim-lspconfig'},             -- Required
-            {                                      -- Optional
-            'williamboman/mason.nvim',
-            run = function()
-                pcall(vim.cmd, 'MasonUpdate')
-            end,
-        },
-        {'williamboman/mason-lspconfig.nvim'}, -- Optional
-
-        -- Autocompletion
-        {'hrsh7th/nvim-cmp'},     -- Required
-        {'hrsh7th/cmp-nvim-lsp'}, -- Required
-        {'L3MON4D3/LuaSnip'},     -- Required
-        }
-    })
+    use('williamboman/mason.nvim')
+    use('williamboman/mason-lspconfig.nvim')
+    use('nvim-tree/nvim-web-devicons') -- Optional, but often used for icons
+    use('b0o/schemastore.nvim')
+    use('neovim/nvim-lspconfig') -- Ensure nvim-lspconfig is also installed
     use({
         "folke/trouble.nvim",
         config = function()
