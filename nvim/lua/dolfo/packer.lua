@@ -4,10 +4,18 @@ return require('packer').startup(function(use)
     -- Packer can manage itself
     use('wbthomason/packer.nvim')
 
-    use({
-        'nvim-telescope/telescope.nvim', branch = '0.1.x',
-        requires = { {'nvim-lua/plenary.nvim'} }
+    use({'nvim-telescope/telescope.nvim',
+  branch = 'master',
+  requires = { 'nvim-lua/plenary.nvim' },
+  config = function()
+    require('telescope').setup({
+      defaults = {
+        preview = {
+          treesitter = false,
+        },
+      },
     })
+  end,})
     use({
         'catppuccin/nvim',
         as = 'catppuccin',
@@ -17,9 +25,46 @@ return require('packer').startup(function(use)
 	    end,
     })
     use({
-        'nvim-treesitter/nvim-treesitter',
-        run = ':TSUpdate'
+  'nvim-treesitter/nvim-treesitter',
+  branch = 'main',
+  run = ':TSUpdate',
+  config = function()
+    local ts = require('nvim-treesitter')
+
+    ts.setup({
+      install_dir = vim.fn.stdpath('data') .. '/site',
     })
+
+    ts.install({
+      'c',
+      'lua',
+      'vim',
+      'vimdoc',
+      'groovy',
+      'query',
+      'go',
+      'typescript',
+      'javascript',
+    })
+
+    vim.api.nvim_create_autocmd('FileType', {
+      pattern = {
+        'c',
+        'lua',
+        'vim',
+        'vimdoc',
+        'groovy',
+        'query',
+        'go',
+        'typescript',
+        'javascript',
+      },
+      callback = function(args)
+        pcall(vim.treesitter.start, args.buf)
+      end,
+    })
+  end,
+})
     use('nvim-lua/plenary.nvim')
     use('ThePrimeagen/harpoon')
     use('mbbill/undotree')
